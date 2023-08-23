@@ -1,0 +1,496 @@
+<html><head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Customer Feedback Form</title>
+	<link rel="icon" type="image/png" href="favicon.png">
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+	<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+	
+	<style>
+	.center {
+		margin: auto;
+		width: 60%;
+		border: 0px solid;
+		padding: 10px;
+	}
+	
+	html, body {
+		display: flex;
+		justify-content: center;
+		font-family: Roboto, Arial, sans-serif;
+		font-size: 15px;
+		padding: 5px;
+	}
+	
+	.btn-bot {
+		position: absolute;
+		left: 50%;
+		width: 100px;
+		margin-left: -50px;
+		bottom: 0px;
+	}
+	
+	form {
+		border: 5px solid #f1f1f1;
+	}
+	
+	input[type=text], input[type=password] {
+		width: 100%;
+		padding: 16px 8px;
+		margin: 8px 0;
+		display: inline-block;
+		border: 1px solid #ccc;
+		box-sizing: border-box;
+	}
+	
+	.icon {
+		font-size: 110px;
+		display: flex;
+		justify-content: center;
+		color: #4286f4;
+	}
+	
+	button {
+		background-color: #48100a;
+		border: none;
+		cursor: pointer;
+		width: 48%;
+		font-size: 18px;
+		font-weight: bold;
+		text-align: center;
+		text-decoration: none;
+		text-transform: uppercase;
+		color: #e4a994;
+		border-radius: 5px; 
+	    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+	    transition-duration: 0.3s;
+		-webkit-transition-property: box-shadow, transform;
+		transition-property: box-shadow, transform;
+
+	}
+
+	
+	h1 {
+		text-align: center;
+		fone-size: 18;
+	}
+	
+	button:hover {
+		opacity: 0.8;
+		box-shadow: 0 0 20px rgba(0,0,0,0.5);
+		-webkit-transform: scale(1.1);
+		transform: scale(1.1);
+	}
+	
+	/* .formcontainer {
+		text-align: left;
+		margin: 24px 50px 12px;
+	}*/
+	.container {
+		padding: 16px 0;
+		text-align: left;
+		/* margin-left: 30px; */
+		margin-left: 20px !important;
+		margin-right: 20px !important;
+	}
+	
+	span.psw {
+		float: right;
+		padding-top: 0;
+		padding-right: 15px;
+	}
+	/* Change styles for span on extra small screens */
+	@media screen and (max-width: 300px) {
+		span.psw {
+			display: block;
+			float: none;
+		}
+	}
+	
+	* {
+		margin: 0;
+		padding: 0;
+	}
+	
+	.rate {
+		float: left;
+		height: 46px;
+		padding: 0 10px;
+	}
+	
+	.rate:not(:checked)>input {
+		position: absolute;
+		top: -9999px;
+	}
+	
+	.rate:not(:checked)>label {
+		float: right;
+		width: 1em;
+		overflow: hidden;
+		white-space: nowrap;
+		cursor: pointer;
+		font-size: 30px;
+		color: #ccc;
+	}
+	
+	.rate:not(:checked)>label:before {
+		content: '★ ';
+	}
+	
+	.rate>input:checked ~ label {
+		color: #ffc700;
+	}
+	
+	.rate:not(:checked)>label:hover, .rate:not(:checked)>label:hover ~ label
+		{
+		color: #deb217;
+	}
+	
+	.rate>input:checked+label:hover, .rate>input:checked+label:hover ~ label,
+		.rate>input:checked ~ label:hover, .rate>input:checked ~ label:hover ~
+		label, .rate>label:hover ~ input:checked ~ label {
+		color: #c59b08;
+	}
+	
+	.vertical-center {
+		margin: 0;
+		position: absolute;
+		top: 50%;
+		-ms-transform: translateY(-50%);
+		transform: translateY(-50%);
+	}
+	
+	.form-control {
+		width: 100%;
+	}
+	
+	.text-danger {
+		color: #fc4b6c !important;
+	}
+	/* input[type=text], input[type=password] {
+		  width: 100%;
+		  padding: 16px 8px;
+		  margin: 8px 0;
+		  display: inline-block;
+		  border: 1px solid #ccc;
+		  box-sizing: border-box;
+		  }   */
+	.modal {
+		display: none; /* Hidden by default */
+		position: fixed; /* Stay in place */
+		z-index: 1; /* Sit on top */
+		padding-top: 100px; /* Location of the box */
+		left: 0;
+		top: 0;
+		width: 100%; /* Full width */
+		height: 100%; /* Full height */
+		overflow: auto; /* Enable scroll if needed */
+		background-color: rgb(0, 0, 0); /* Fallback color */
+		background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+	}
+	
+	/* Modal Content */
+	.modal-content {
+		background-color: #fefefe;
+		margin: auto;
+		padding: 20px;
+		border: 1px solid #888;
+		width: 80%;
+	}
+	
+	/* The Close Button */
+	.close {
+		color: #aaaaaa;
+		float: right;
+		font-size: 28px;
+		font-weight: bold;
+	}
+	
+	.close:hover, .close:focus {
+		color: #000;
+		text-decoration: none;
+		cursor: pointer;
+	}
+	
+	.textcustom {
+		height: 25px;
+		font-size: 14pt;
+	}
+	
+	.box {
+		border: 1px black;
+		padding: 10px;
+		background-color: white;
+		color: black;
+	}
+	</style>
+	<script>
+		/*<![CDATA[*/
+	
+		//var result = document.getElementById('output');
+		var words = ["H.O.","BHIWANDI","MUMBAI","NEW DELHI","CHANDIGARH","UP WESTERN (GZB)","UP EASTERN (LUCKNOW)","JAIPUR","AHMEDABAD","AHMEDABAD UPCOUNTRY","PUNE","BANGLORE","REGIONAL ACCOUNT-WEST","PUNJAB(ZIRAKPUR)","CHENNAI","HYDERABAD","KOLKATA","HARYANA","AHMEDABAD NEW","NEW DELHI-II","SELECT CITY WALK(RETAIL)","KOLKATA WAREHOUSE","DELHI SELECT CITY","MALAD(MUMBAI)","CORPORATE OFFICE HO","AMANORA(PUNE)","PHOENIX(BANGLORE)","AHMEDABAD ONE","KURLA(MUMBA)","LOKHANDWALA(MUMBAI)","GREAT INDIA PLACE","PACIFIC MALL (NEW DELHI)","BHIWANDI NEW","DLF PROMINADE(VASANT KUNJ)","GARUDA(BANGLORE)","INORBIT(HYDERABAD)","RCITY(MUMBAI)","MOMENTS MALL(NEW DELHI)","GROWEL`S MALL - KIOSK(MUMBAI)","INORBIT MALL - KIOSK(MALAD)","VR CITY (SURAT)","BANDRA LINKING ROAD(MUMBAI)","OBEROI MALL(MUMBAI)","PACIFIC MALL(DEHRADOON)","VIVA CITY(THANE)","TRILLIUM(AMRITSAR)","NEW DELHI NEW","KOREGAON PARK PLAZA(PUNE)","SILVER ARC MALL(LUDHIANA)","ELANTE MALL(CHANDIGARH)","Z SQUARE MALL(KANPUR)","DB CITY MALL(BHOPAL)","SELECT CITY EVENT","PHOENIX MARKET CITY(PUNE)","WEB ORDER","GREAT INDIA PLACE(EVENT)","FORUM MALL(KOLKATA)","ELANTE MALL-KIOSK(CHANDIGARH)","INORBIT MALL(MUMBAI)","ORION MALL(BANGALORE)","DLF SAKET(NEW DELHI)","PHOENIX MALL-KIOSK(BANGLORE)","VIVIANA MALL-KIOSK(THANE)","SEASONS MALL(PUNE)","WESTGATE MALL(NEW DELHI)","FUN MALL(LUCKNOW)","KHAN MARKET(NEW DELHI)","LULU MALL(COCHIN)","QUEST MALL(KOLKATA)","MANTRI MALL(BANGLORE)","KAMLA NAGAR(NEW DELHI)","ANAND ENTERPRISES(NEW DELHI)","MBD NEOPOLIS (JALANDHAR)","THE CAPITAL MALL(PALGHAR)","DOMESTIC AIRPORT - (VIJAYAWADA)","BHARTIYA MALL - KIOSK(BENGALURU)","GMR AIIRPORT(HYDERABAD)","MARKETCITY KURLA-KIOSK(MUMBAI)","EXPRESS AVENUE MALL(CHENNAI)","MGF MALL - KIOSK(GURGAON)","FORUM MALL - KIOSK(HYDERABAD)","SGS MALL(PUNE)","ACROPOLIS MALL(KOLKATA)","PHOENIX MARKET CITY(CHENNAI)","INORBIT MALL(VADODARA)","DLF MALL OF INDIA(NOIDA)","NEW DELHI WAREHOUSE","WTP MALL(JAIPUR)","MARKETCITY MALL(LUCKNOW)","ORION EAST MALL-KIOSK(BANGALORE)","GVK MALL(HYDERABAD)","DOMESTIC AIRPORT - (GUWAHATI)","SHIPRA MALL (GHAZIABAD)","SAHARA MALL(LUCKNOW)","AWADH ONE(LUCKNOW)","MARKET SQUARE MALL-SARJAPUR(BANGALORE)","GALLERIA(GURGAON)","FORUM MALL - KIOSK(CHENNAI)","HAUZ KHAS VILLAGE(NEW DELHI)","VR MALL(BANGALORE)","KORUM MALL - KIOSK(THANE)","VR PUNJAB -KIOSK(MOHALI)","LOGIX CITY CENTRE MALL(NOIDA)","SEASWOOD MALL - KIOSK(NAVI MUMBAI)","FORUM FIZA MALL-KIOSK(MANGALORE)","RCITY MALL - KIOSK(MUMBAI)","WAVE MALL - KIOSK(JAMMU)","PACIFIC MALL DWARKA - KIOSK(NEW DELHI)","ZEMIRA RETAIL","WAVE MALL - KIOSK(LUDHIANA)","WAVE MALL - KIOSK(LUCKNOW)","BHARTI PAVELLION - KIOSK(LUDHIANA)","MBD MALL - KIOSK(LUDHIANA)","JUNCTION MALL(DURGAPUR)","GUWAHATI","CITY CENTRE MALL- KIOSK(GUWAHATI)","ALCAZAR MALL(HYDERABAD)","MAGNETO MALL-KIOSK(RAIPUR)","PHOENIX MALL(BAREILY)","MARCO ALDANY SALON(NEW DELHI)","CITY CENTRE MALL- KIOSK(ROHINI)","MAHAGUN METRO MALL(GHAZIABAD)","LODHA XPERIA MALL(MUMBAI)","VR CHENNAI MALL-KIOSK (CHENNAI)","MALL OF AMRITSAR-KIOSK (AMRISTAR)","BROOKFIELDS MALL-KIOSK(COIMBATORE)","INORBIT WHITEFIELD MALL-KIOSK(BENGALURU)","NUCLEUS MALL-KIOSK(RANCHI)","CITY MALL 36-KIOSK(BILASPUR)","VEGA CIRCLE MALL-KIOSK(SILIGURI)","RAMA MAGNETO MALL-KIOSK(BILASPUR)","CITY CENTER MALL-KIOSK(RAIPUR)","DB MALL-KIOSK(GWALIOR)","CELEBRATION MALL-KIOSK(UDAIPUR)","RAVE 3 MALL-KIOSK(KANPUR)","KUMAR PACIFIC MALL - KIOSK(PUNE)","CG SQUARE MALL - KIOSK(AHMEDABAD)","COSMOS MALL - KIOSK(SILIGURI)","DOMESTIC AIRPORT - KIOSK(CHENNAI)","T2 DOMESTIC AIRPORT - KIOSK(MUMBAI)","ARDEE MALL(GURGAON)","P\u0026M HI TECH CITY CENTER(JAMSHEDPUR)","CITY CENTRE MALL(GUWAHATI)","PROZONE MALL - KIOSK(AURANGABAD)","PROZONE MALL - KIOSK(COIMBATORE)","INFINITI MALL - KIOSK(MALAD)","KAMLA NAGAR BUNGALOW ROAD(NEW DELHI)","CITY MALL - KIOSK(KOTA)","MAKEUP ON WHEEL(NEW DELHI)","MALL DE GOA - KIOSK(GOA)","BALLABGARH WAREHOUSE(HARYANA)","URBAN SQUARE MALL-KIOSK(UDAIPUR)","GOA PANJIM HIGH STREET(GOA)","CB MAXIMA SOLUTION","MAKEUP ON WHEEL(GURGAON)","WEB ORDER(BALLABGARH)","C21 MALL - KIOSK(INDORE)","DOMESTIC AIRPORT - (RAIPUR)","DOMESTIC AIRPORT - (INDORE)","CB VIVA COSMETICS","PHOENIX MARKET CITY PALASSIO(LUCKNOW)","FUN MALL -KIOSK(LUCKNOW)","HILITE MALL-KIOSK(CALICUT)","VR MALL-KIOSK(AMBARSAR)","CITY CENTRE MALL - KIOSK(SILIGURI)","BENGALURU WAREHOUSE","BHIWANDI WAREHOUSE","LULU GLOBAL MALL(BANGLORE)","CITY CENTRE MALL - CART(SILIGURI)","WEB ORDER(BHIWANDI)","CITY CENTER MALL-KIOSK(HALDIA)","WEB ORDER(BENGALURU)","NEW ERA STORE","DOMESTIC AIRPORT -CART(BHOPAL)","NETAJI SUBHASH PLACE-KIOSK(NEW DELHI)","SUNCITY MALL-KIOSK(KOLKATA)","CITY CENTRE NEW TOWN MALL- KIOSK(KOLKATA)","UNISON CENTRIO MALL(DEHRADUN)","PHOENIX MARKET CITY MALL-KURLA(MUMBAI)","R MALL - KIOSK(THANE)","COLORBAR WEBSITE(BALLABGARH)","WESTEND MALL - KIOSK(PUNE)","JUHU STORE(MUMBAI)","SARATH CITY MALL-KIOSK(HYDERABAD)","DOMESTIC AIRPORT - (AGARTALA)","PHOENIX CITADEL MALL(INDORE)","CB PRITAM INTERNATIONAL","DOMESTIC AIRPORT - (KOLKATA)","LULU MALL(LUCKNOW)","WORLDMARK MALL(GURGAON)","SHALIMAR MALL- KIOSK(LUCKNOW)","NUCLEUS PARIKRAMA MALL-(RANCHI)","CITY CENTRE MALL- KIOSK(PATNA)","V3S EAST CENTRE MALL - KIOSK(NEW DELHI)","SPREE WALK(RAIPUR)","TAPADIA CITY CENTRE-KIOSK(AMRAVATI)","ELPRO CITY SQUARE MALL-KIOSK(PUNE)","PLUTONE MALL-(ROURKELA)","LULU MALL-KIOSK(TRIVANDRUM)","MALL OF JAIPUR-(JAIPUR)","GUWAHATI WAREHOUSE","DOMESTIC AIRPORT - (GOA)","BANDRA STORE(MUMBAI)"];
+	
+		//var words = ["apple", "banana", "cherry", "date", "elderberry", "fig"];
+	
+		function autocomplete(text) {
+			// Clear the previous list
+			var input = document.getElementById("cbstore");
+			var autocompleteList = document.getElementById("autocomplete-list");
+			autocompleteList.innerHTML = "";
+	
+			// Filter the words that match the input text
+			var matchingWords = words.filter(function(word) {
+				return word.toLowerCase().startsWith(text.toLowerCase());
+			});
+	
+			// Create a list item for each matching word
+			matchingWords.forEach(function(word) {
+				word = word.toUpperCase();
+				text = text.toUpperCase();
+				var listItem = document.createElement("div");
+				listItem.classList.add("box");
+				listItem.innerHTML = "<strong>" + text + "</strong>"
+						+ word.substr(text.length);
+				listItem.addEventListener("click", function() {
+					input.value = word;
+					autocompleteList.innerHTML = "";
+				});
+				autocompleteList.appendChild(listItem);
+			});
+		}
+		function getValue(val) {
+			autocomplete(val);
+		}
+	
+		function openModal() {
+	
+			var ele = document.getElementsByName('rate');
+			var satisf = document.getElementsByName('satis');
+			var rateFound = false;
+			var satisfiedServ = false;
+			var nameexist = false;
+			var phoneexist = false;
+			var store = false;
+			for (i = 0; i < ele.length; i++) {
+				if (ele[i].checked) {
+					document.getElementById("satisfied").value = ele[i].value;
+					rateFound = true;
+					break;
+				}
+			}
+	
+			if (!rateFound) {
+				document.getElementById("overall").style.display = "block";
+				document.getElementById('overall').className = "text-danger";
+			} else {
+				document.getElementById('overall').className = "";
+			}
+	
+			for (i = 0; i < satisf.length; i++) {
+				if (satisf[i].checked) {
+					document.getElementById("satisfiedservice").value = satisf[i].value;
+					satisfiedServ = true;
+					break;
+				}
+			}
+	
+			if (!satisfiedServ) {
+				document.getElementById("lblsatisfied").style.display = "block";
+				document.getElementById('lblsatisfied').className = "text-danger";
+			} else {
+				document.getElementById('lblsatisfied').className = "";
+			}
+	
+			if (document.getElementById("name").value == "") {
+				document.getElementById("lblname").style.display = "block";
+				document.getElementById('lblname').className = "text-danger";
+			} else {
+				nameexist = true;
+				document.getElementById('lblname').className = "";
+			}
+	
+			if (document.getElementById("cbstore").value == "") {
+				document.getElementById("lblstore").style.display = "block";
+				document.getElementById('lblstore').className = "text-danger";
+			} else {
+				store = true;
+				document.getElementById('lblstore').className = "";
+			}
+	
+			if (document.getElementById("phone").value == "") {
+				document.getElementById("lblphone").style.display = "block";
+				document.getElementById('lblphone').className = "text-danger";
+			} else {
+				phoneexist = true;
+				document.getElementById('lblphone').className = "";
+			}
+	
+			if (rateFound && satisfiedServ) {
+				if (phoneexist && nameexist && store) {
+					//var modal = document.getElementById("myModal");
+					//modal.style.display = "block";
+					document.getElementById("btnSubmit").disabled = true;
+					document.getElementById("customer-feedback").submit();
+				}
+			}
+			/* if (fileInputField.files.length == 0) {
+				document.getElementById("fileerror").style.display = "block";
+				document.getElementById('fileerror').className = "text-danger col-lg-6 col-md-6 form-group mt-md-0";
+				//alert("Please select a file!")
+			} else {
+	
+				var modal = document.getElementById("myModal");
+				modal.style.display = "block";
+				document.getElementById("product-return").submit();
+			} */
+		}
+	
+		/*]]>*/
+	</script>
+	</head>
+	
+	<body>
+		<!-- <div id="myModal" class="modal">
+	
+			Modal content
+			<div class="modal-content">
+	
+				<p>Processing..</p>
+			</div>
+	
+		</div> -->
+		<form method="POST" class="register-form" id="customer-feedback" action="/saveCustomerFeedback">
+			<br>
+			<h1>Customer Feedback Form</h1>
+	
+			<hr>
+	
+			<div class="main">
+				<div class="container" style="margin-left: 70px; margin-right: 50px">
+					<input type="hidden" name="satisfied" class="form-control" id="satisfied" placeholder="satisfied" data-msg="" value=""> <label id="overall">1. Overall, how
+						would you rate your experience with Colorbar? </label>
+	
+	
+				</div>
+	
+				<div class="rate" style="margin-left: 65px">
+					<input type="radio" id="star5" name="rate" value="5"> <label for="star5" title="text">5 stars</label> <input type="radio" id="star4" name="rate" value="4"> <label for="star4" title="text">4 stars</label> <input type="radio" id="star3" name="rate" value="3"> <label for="star3" title="text">3
+						stars</label> <input type="radio" id="star2" name="rate" value="2"> <label for="star2" title="text">2 stars</label> <input type="radio" id="star1" name="rate" value="1"> <label for="star1" title="text">1 star</label>
+				</div>
+	
+				<br> <br>
+				<div class="container" style="margin-left: 70px; margin-right: 50px">
+					<label id="lblsatisfied">2. How satisfied were you with our
+						products/ services? </label> <br>
+					<div style="margin-left: 20px">
+						<input type="hidden" name="satisfiedservice" class="form-control" id="satisfiedservice" placeholder="satisfiedservice" data-msg="" value=""> <br> <input type="radio" id="Verysatisfied" name="satis" value="Very satisfied"> <label for="Verysatisfied" title="text">Very
+							satisfied</label> <br> <input type="radio" id="satisfied" name="satis" value="satisfied"> <label for="satisfied" title="text">Satisfied</label><br> <input type="radio" id="Neutral" name="satis" value="Neutral"> <label for="Neutral" title="text">Neutral</label> <br> <input type="radio" id="Unsatisfied" name="satis" value="Unsatisfied"> <label for="Unsatisfied" title="text">Unsatisfied</label> <br> <input type="radio" id="na" name="satis" value="na"> <label for="na" title="text">N/A</label>
+					</div>
+				</div>
+	
+				<div class="container" style="margin-left: 70px; margin-right: 50px">
+					<label>3. Is there anything else you would like to share
+						about our products or customer experience? </label> <br>
+					<div>
+						<br>
+						<textarea class="form-control" id="remarks" rows="4" cols="48" placeholder="Remarks" style="font-size: 14pt; width: 731px; height: 87px;" name="remarks"></textarea>
+					</div>
+				</div>
+				<div class="container" style="margin-left: 70px; margin-right: 50px">
+					<h3>
+						<u>Customer Contact Details</u>
+					</h3>
+				</div>
+	
+	
+	
+	
+	
+				<div class="container" style="margin-left: 70px; margin-right: 50px">
+					<label id="lblname">Name </label>
+					<div>
+						<input id="name" class="form-control textcustom" placeholder="" data-msg="" name="name" value="">
+					</div>
+					<br> <label id="lblphone">Phone </label>
+					<div>
+						<input type="tel" id="phone" class="form-control textcustom" placeholder="" data-msg="" name="phone" value="">
+					</div>
+					<br> <label id="lblstore">Colorbar Store Visited (Store Name) </label>
+					<div>
+						<input onkeyup="getValue(this.value)" id="cbstore" placeholder="" data-msg="" class="form-control textcustom" name="cbstore" value="">
+						<div id="autocomplete-list" class="new"></div>
+					</div>
+				</div>
+	
+				<!-- <div class="container">
+						<label>Phone </label> 
+						<div>
+							<input type="tel" th:field="*{phone}" id="phone"
+											class="form-control" placeholder="" data-msg="">
+						</div>
+					</div>
+					<div class="container">
+						<label>Colorbar Store Visited </label> 
+						<div>
+							<input th:field="*{cbstore}" id="cbstore"
+											placeholder="" data-msg="">
+						</div>
+					</div> -->
+	
+				<div class="text-center" style="text-align: center;">
+					<button type="button" class="btn-info" id="btnSubmit" style="font-family: Roboto, Arial, sans-serif; font-size: 20px; padding: 12px;
+					width: 30%;
+					border-radius: 13px;" onclick="openModal()">
+						<b>Submit Feedback</b>
+					</button>
+				</div>
+	
+			</div>
+	
+	
+		</form>
+	
+	
+	<!-- Code injected by live-server -->
+	<script>
+		// <![CDATA[  <-- For SVG support
+		if ('WebSocket' in window) {
+			(function () {
+				function refreshCSS() {
+					var sheets = [].slice.call(document.getElementsByTagName("link"));
+					var head = document.getElementsByTagName("head")[0];
+					for (var i = 0; i < sheets.length; ++i) {
+						var elem = sheets[i];
+						var parent = elem.parentElement || head;
+						parent.removeChild(elem);
+						var rel = elem.rel;
+						if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+							var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+							elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+						}
+						parent.appendChild(elem);
+					}
+				}
+				var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+				var address = protocol + window.location.host + window.location.pathname + '/ws';
+				var socket = new WebSocket(address);
+				socket.onmessage = function (msg) {
+					if (msg.data == 'reload') window.location.reload();
+					else if (msg.data == 'refreshcss') refreshCSS();
+				};
+				if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+					console.log('Live reload enabled.');
+					sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+				}
+			})();
+		}
+		else {
+			console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+		}
+		// ]]>
+	</script>
+	</body></html>
